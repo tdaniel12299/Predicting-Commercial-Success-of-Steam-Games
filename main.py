@@ -39,7 +39,6 @@ df.drop(columns=['index','unknown','Movies','Screenshots','Metacritic url'], inp
 
 df['Price'] = pd.to_numeric(df["Price"])
 df['AppID'] = pd.to_numeric(df["AppID"])
-df['Release date'] = pd.to_datetime(df["Release date"])
 df['Estimated owners'] = df['Estimated owners'].astype('category')
 df['Peak CCU'] = pd.to_numeric(df["Peak CCU"])
 df['Required age'] = pd.to_numeric(df["Required age"])
@@ -49,8 +48,11 @@ df['Average playtime forever'] = pd.to_numeric(df["Average playtime forever"])
 df['Average playtime two weeks'] = pd.to_numeric(df["Average playtime two weeks"])
 df['Median playtime forever'] = pd.to_numeric(df["Median playtime forever"])
 df['Median playtime two weeks'] = pd.to_numeric(df["Median playtime two weeks"])
+df['Recommendations'] = pd.to_numeric(df["Recommendations"])
 
 ###### drop nan
 
 df_cleaned = df.dropna(subset=['About the game'])
 #df_cleaned.to_csv("cleanedData.csv", index = False)
+
+print(df.info())
