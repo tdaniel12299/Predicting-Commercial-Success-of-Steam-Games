@@ -14,6 +14,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
+import matplotlib
 
 
 
@@ -135,11 +136,59 @@ rf_classReport = classification_report(y_test, rf_pred)
 # print('='*10)
 # print(rf_classReport)
 
+##### insight charts for conclusions for top features in the random forest
 
+df['Language Bin'] = pd.cut(
+    df['Total supported languages'],
+    bins=[0,5,10,20,40,100]
+)
+lang_success = (
+    df.groupby('Language Bin')['Success']
+      .mean()
+)
+lang_success.plot(
+    kind='bar',
+    title='Relationship Between Localization and Game Success'
+    )
 
+df['Age Bin'] = pd.cut(
+    df['Game age'],
+    bins=[0,2,5,10,15,20,30]
+)
+age_success = (
+    df.groupby('Age Bin')['Success']
+      .mean()
+)
+age_success.plot(
+    kind='bar',
+    title='Relationship Between Game Age and Success'
+)
 
+df['Price Bin'] = pd.qcut(
+    df['Price'],
+    q=10,
+    duplicates='drop'
+)
+price_success = (
+    df.groupby('Price Bin')['Success']
+      .mean()
+)
 
+price_success.plot(
+    kind='bar',
+    title='Relationship Between Price and Success'
+    )
 
+importance.sort_values(
+    by='Importance',
+    ascending=True
+).tail(15).plot(
+    x='Feature',
+    y='Importance',
+    kind='barh',
+    legend=False,
+    title='Top 15 Predictors of Steam Game Success'
+)
 
 
 
