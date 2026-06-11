@@ -13,7 +13,7 @@ import ast
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import make_classification
+from sklearn.metrics import classification_report
 
 
 
@@ -22,7 +22,7 @@ from sklearn.datasets import make_classification
 df= pd.read_csv("cleanedData.csv")
 
 activeGames = df[df['Recommendations'] > 0]
-threshold = activeGames['Recommendations'].quantile(.75)
+threshold = activeGames['Recommendations'].quantile(.5)
 
 df['Success'] = (
     df['Recommendations'] >= threshold
@@ -88,17 +88,17 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 ##### Logistical Regression
 
-model = LogisticRegression(
+lr_model = LogisticRegression(
     random_state=42, max_iter=1000
 )
-model.fit(X_train, y_train)
-model.predict(X_test)
-model.predict_proba(X_test[:5])
-model.score(X_test, y_test) # make sure data is trained on unseen values
+lr_model.fit(X_train, y_train)
+lr_pred = lr_model.predict(X_test)
+lr_model.predict_proba(X_test[:5])
+lr_model.score(X_test, y_test) # make sure data is trained on unseen values
 
 coef_df = pd.DataFrame({
     'Feature': X.columns,
-    'Coefficient': model.coef_[0]
+    'Coefficient': lr_model.coef_[0]
 })
 
 coef_df.sort_values(
@@ -108,10 +108,32 @@ coef_df.sort_values(
 
 ##### random forest classifer
 
+rf_model = RandomForestClassifier(
+    random_state=42
+)
+rf_model.fit(X_train, y_train)
+rf_pred = rf_model.predict(X_test)
+rf_model.predict_proba(X_test[:5])
+rf_model.score(X_test, y_test)
 
+importance = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': rf_model.feature_importances_
+})
 
+importance.sort_values(
+    by='Importance',
+    ascending=False
+).head(n=30)
 
+##### classification reports for both models for comparison
 
+lr_classReport = classification_report(y_test, lr_pred)
+rf_classReport = classification_report(y_test, rf_pred)
+
+# print(lr_classReport)
+# print('='*10)
+# print(rf_classReport)
 
 
 
