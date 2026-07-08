@@ -88,9 +88,16 @@ Below are a few highlights from the dataset after cleaning:
 
 * After applying a logarithmic transformation, the distribution of game prices remained positively skewed. The median price was approximately $20.67, with 50% of games priced between roughly $10 and $40
 * The transformation reduced the influence of extreme values but several high-priced outliers remained, indicating that a subset of games were substantially more expensive than the majority of titles in the dataset. This subset is believed to be games produced by triple A developers (big name companies)
+<img width="534" height="413" alt="logPriceGraph" src="https://github.com/user-attachments/assets/ecf68bda-7420-4ff1-af25-8cd351b1c0bc" />
+
+
+
 
 * The line graph indicates slow increase in annual game releases from 1997-2013 and rapid expansion from 2014 to 2019. Peak volumes of released games sits at 22,000 for the year of 2025 which is consist with the develpment of entertainment technology
 * Sudden drop of titles suggests incomplete data for the year of 2026
+<img width="569" height="432" alt="gameReleasesInYears" src="https://github.com/user-attachments/assets/91960687-8388-428d-a819-ddb1bf1b1d3b" />
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -123,6 +130,11 @@ The Random Forest Model slightly outperformed the other approach on the test and
 
 * Localization reach appears strongly associated with game success, suggesting that broader language support may increase market accessibility
 * Games offering additional Steam features were more likely to be classified as successful
+* While LogPrice is heavily utilized within the model, it only suggests that it has an association with game success
+
+ **Overall, specific genre and category of game matter less for future success compared to localization, price point, and built in accessiablity features** 
+  
+  <img width="1015" height="536" alt="top15PredictorsOfSuccess" src="https://github.com/user-attachments/assets/cbda23cb-4ea3-4307-b795-9bbec6eef200" />
 
 
 
